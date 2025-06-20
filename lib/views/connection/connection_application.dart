@@ -54,6 +54,45 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
     }
   }
 
+  bool _validateCurrentStep() {
+    switch (_currentStep) {
+      case 0:
+        // Package step - no validation needed as package is already selected
+        return true;
+      case 1:
+        // Personal information step
+        return _validatePersonalInfo();
+      case 2:
+        // Address step
+        return _validateAddress();
+      default:
+        return false;
+    }
+  }
+
+  bool _validatePersonalInfo() {
+    return Validators.validateName(_fullNameController.text) == null &&
+           Validators.validateEmail(_emailController.text) == null &&
+           Validators.validatePhone(_phoneController.text) == null;
+  }
+
+  bool _validateAddress() {
+    return _validateAddressField(_addressController.text) == null;
+  }
+
+  String? _validateAddressField(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your address';
+    }
+    if (value.length < 10) {
+      return 'Please enter a complete address';
+    }
+    if (!value.contains(RegExp(r'\d'))) {
+      return 'Address should contain house/building number';
+    }
+    return null;
+  }
+
   Future<void> _submitApplication() async {
     setState(() {
       _autoValidate = true;
@@ -222,13 +261,19 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
       child: Stepper(
         currentStep: _currentStep,
         onStepContinue: () {
-          bool isLastStep = _currentStep == 2;
+          if (_validateCurrentStep()) {
+            bool isLastStep = _currentStep == 2;
 
-          if (isLastStep) {
-            _submitApplication();
+            if (isLastStep) {
+              _submitApplication();
+            } else {
+              setState(() {
+                _currentStep++;
+              });
+            }
           } else {
             setState(() {
-              _currentStep++;
+              _autoValidate = true;
             });
           }
         },
@@ -423,15 +468,7 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
         UIHelpers.customTextField(
           controller: _addressController,
           label: 'Installation Address',
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Please enter your address';
-            }
-            if (value.length < 10) {
-              return 'Please enter a complete address';
-            }
-            return null;
-          },
+          validator: _validateAddressField,
           maxLines: 3,
           hintText: 'Enter your complete address including city, state and PIN code',
         ),
