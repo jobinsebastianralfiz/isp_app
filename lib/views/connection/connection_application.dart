@@ -84,12 +84,23 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
     if (value == null || value.isEmpty) {
       return 'Please enter your address';
     }
-    if (value.length < 10) {
+    
+    final trimmedValue = value.trim();
+    if (trimmedValue.length < 10) {
       return 'Please enter a complete address';
     }
-    if (!value.contains(RegExp(r'\d'))) {
-      return 'Address should contain house/building number';
+    
+    // Check for common address components (more flexible)
+    final addressParts = trimmedValue.split(RegExp(r'[,\n]'));
+    if (addressParts.length < 2) {
+      return 'Please include area/locality and city in your address';
     }
+    
+    // Ensure it's not just repeated characters or very basic input
+    if (RegExp(r'^(.)\1{9,}$').hasMatch(trimmedValue.replaceAll(' ', ''))) {
+      return 'Please enter a valid address';
+    }
+    
     return null;
   }
 
