@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   UIHelpers.customTextField(
                     controller: _firstNameController,
                     label: 'First Name',
-                    validator: Validators.validateName,
+                    validator: Validators.validateFirstName,
                     keyboardType: TextInputType.name,
                   ),
 
@@ -138,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   UIHelpers.customTextField(
                     controller: _lastNameController,
                     label: 'Last Name',
-                    validator: Validators.validateName,
+                    validator: Validators.validateLastName,
                     keyboardType: TextInputType.name,
                   ),
 

@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
             ),
           ),
-          cardTheme: CardTheme(
+          cardTheme: CardThemeData(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),

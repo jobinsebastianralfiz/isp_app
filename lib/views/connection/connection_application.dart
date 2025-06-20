@@ -71,7 +71,7 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
   }
 
   bool _validatePersonalInfo() {
-    return Validators.validateName(_fullNameController.text) == null &&
+    return Validators.validateFullName(_fullNameController.text) == null &&
            Validators.validateEmail(_emailController.text) == null &&
            Validators.validatePhone(_phoneController.text) == null;
   }
@@ -444,7 +444,7 @@ class _ConnectionApplicationFormState extends State<ConnectionApplicationForm> {
         UIHelpers.customTextField(
           controller: _fullNameController,
           label: 'Full Name',
-          validator: Validators.validateName,
+          validator: Validators.validateFullName,
           keyboardType: TextInputType.name,
         ),
         const SizedBox(height: 16),

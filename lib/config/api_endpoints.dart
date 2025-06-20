@@ -1,8 +1,13 @@
 class ApiEndpoints {
-  // Base URL for local development
+  // Base URL for production deployment
+  static const String baseUrl = 'https://ispmanagement.ralfiz.com/'; // Production server
+  
+  // Local development URLs (commented out)
   // Use 10.0.2.2 instead of localhost for Android emulator
   // Use localhost:8000 for iOS simulator
-  static const String baseUrl = 'http://localhost:8000/'; // Has trailing slash
+  //static const String baseUrl = 'http://localhost:8000/'; // Has trailing slash
+  //static const String baseUrl = 'http://10.0.2.2:8000/'; // Has trailing slash
+  //static const String baseUrl = 'http://192.168.1.47/'; // Windows machine IP
 
   // Auth endpoints
   static const String register = 'api/users/register/'; // No leading slash

@@ -53,8 +53,46 @@ class Validators {
     return null;
   }
 
-  // Validate name
-  static String? validateName(String? value) {
+  // Validate first name
+  static String? validateFirstName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'First name is required';
+    }
+
+    if (value.trim().length < 2) {
+      return 'First name must be at least 2 characters';
+    }
+
+    // Check for valid name characters (letters, hyphens, apostrophes only)
+    final namePattern = RegExp(r"^[a-zA-Z\-']+$");
+    if (!namePattern.hasMatch(value.trim())) {
+      return 'First name can only contain letters, hyphens and apostrophes';
+    }
+
+    return null;
+  }
+
+  // Validate last name
+  static String? validateLastName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Last name is required';
+    }
+
+    if (value.trim().length < 2) {
+      return 'Last name must be at least 2 characters';
+    }
+
+    // Check for valid name characters (letters, hyphens, apostrophes only)
+    final namePattern = RegExp(r"^[a-zA-Z\-']+$");
+    if (!namePattern.hasMatch(value.trim())) {
+      return 'Last name can only contain letters, hyphens and apostrophes';
+    }
+
+    return null;
+  }
+
+  // Validate full name (for forms requiring first and last name together)
+  static String? validateFullName(String? value) {
     if (value == null || value.isEmpty) {
       return 'Name is required';
     }
